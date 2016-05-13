@@ -1,0 +1,38 @@
+{
+  "name": "deftly-express",
+  "version": "1.0.0-1",
+  "description": "An express based HTTP transport for deftly",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha spec/integration"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/deftly/deftly-express.git"
+  },
+  "keywords": [
+    "microservice",
+    "http",
+    "express",
+    "deftly"
+  ],
+  "author": "Alex Robson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deftly/deftly-express/issues"
+  },
+  "homepage": "https://github.com/deftly/deftly-express#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "lodash": "^4.12.0",
+    "request": "^2.72.0",
+    "when": "^3.7.7"
+  },
+  "devDependencies": {
+    "biggulp": "^1.2.0",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
+    "deftly": "~1.0.0-1",
+    "moment": "^2.13.0"
+  }
+}
