@@ -57,7 +57,15 @@ function getEnvelope( action, resource, req ) {
 		headers: req.headers || {},
 		route: req.url,
 		user: req.user,
-		cookies: req.cookies
+		cookies: req.cookies,
+		signout: function() {
+			if( req.logout ) {
+				req.logout();	
+			}
+			if( req.session && req.session.destroy ) {
+				req.session.destroy();
+			}
+		}
 	};
 
 	[ req.params, req.query ]

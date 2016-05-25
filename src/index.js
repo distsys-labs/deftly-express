@@ -43,9 +43,9 @@ module.exports = function expressTransport() {
 		http: http.createServer( app )
 	};
 	state.router = require( "./router" )( state );
-	return {
+	return Object.assign( {}, state, {
 		initialize: initialize.bind( null, state ),
 		start: start.bind( null, state ),
 		stop: stop.bind( null, state )
-	};
+	} );
 }

@@ -41,6 +41,13 @@ function replyWith( res, reply ) {
 	}
 }
 
+function render( res, reply ) {
+	var code = reply.statusCode || reply.status || 200;
+	setMeta( res, reply );
+	res.status( code );
+	res.render( reply.view, reply.data );
+}
+
 function respond( state, req, res, reply ) {
 	if( reply.file ) {
 		if( reply.file.path ) {
@@ -54,6 +61,8 @@ function respond( state, req, res, reply ) {
 		redirect( res, reply );
 	} else if( reply.forward ) {
 		forwardTo( req, res, reply );
+	} else if ( reply.view ) {
+		render( res, reply );
 	} else {
 		replyWith( res, reply );
 	}

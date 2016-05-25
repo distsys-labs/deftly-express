@@ -64,7 +64,7 @@ Relative URLs are comprised of a number of possible values in the following orde
 		[root]: '', // root directory for relative path
 		[lastModified]: true, // sets Last-Modified header based on file system
 		[inline]: false, // when true, no user dialog will appear
-		[stream]: ,// a file stream to pipe to the response
+		[stream]: ,// a stream to pipe to the response
 	},
 	stream: { // used when sending back a stream
 		[type]: , // content-type, defaults to octet-stream
@@ -79,7 +79,8 @@ Relative URLs are comprised of a number of possible values in the following orde
 	redirect: { // only used when redirecting
 		[status]: 302, // use to set a status other than 302
 		url: // the URL to redirect to
-	}
+	},
+	view: "viewName"
 }
 ```
 
