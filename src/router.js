@@ -91,7 +91,7 @@ function getUrl( state, resource, action ) {
 		state.config.urlPrefix || "",
 		state.config.apiPrefix || "",
 		resource.urlPrefix || resource.name,
-		action.url || action.name
+		action.url === undefined ? action.name : action.url
 	];
 	return _.map( parts, prepSegment )
 		.join( "/" )
