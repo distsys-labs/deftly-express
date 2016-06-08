@@ -11,7 +11,8 @@ Defaults shown:
 		port: 8800,
 		apiPrefix: "/api", // prefixes all API calls
 		urlPrefix: "", // prefixes all URLs
-		configure: undefined
+		configure: undefined, // a callback to configure express
+		postRouting: undefined // a callback to perform any final express configuration 
 	}
 }
 ```
@@ -27,9 +28,12 @@ example
 function expressConfig( state ) {
 	var app = state.express;
 	app.use( "/", require( "cookie-parser" )() );
-	return when();
+	return when(); // if the function is asynchronous, it must return a promise
 }
 ```
+
+### Final Configuration
+In some cases, there may be express configuration that needs to wait until after deftly-express has supplied the resource action's routes to express. This callback works exactly like the `configure` callback but is invoked after those routes have been supplied. 
 
 ## Routing
 This module builds routes using a number of configuration values as well as properties on the resource and action.

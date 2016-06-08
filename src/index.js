@@ -15,14 +15,27 @@ function initialize( state, deftly ) {
 	Object.assign( state, {
 		config: configuration
 	} );
-	var reply = when();
+	
+	var configure = when();
+	var postRouting = () => when();
 	if( configuration.configure ) {
-		reply = configuration.configure( state );
-		if( !reply.then ) {
-			reply = when( reply );
+		configure = configuration.configure( state );
+		if( !configure || !configure.then ) {
+			configure = when( configure );
 		}
 	}
-	return reply.then( state.router.createRoutes.bind( null, deftly ) );
+	if( configuration.postRouting ) {
+		postRouting = () => {
+			var result = configuration.postRouting( state );
+			if( !result || !result.then ) {
+				result = when( result );
+			}
+			return result;
+		};
+	}
+	return configure
+		.then( state.router.createRoutes.bind( null, deftly ) )
+		.then( postRouting );
 }
 
 function start( state ) {
