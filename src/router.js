@@ -109,11 +109,11 @@ function setContext( action, resource, req, res, next ) {
 
 function telemetry( state, deftly, req, res, next ) {
 	var ip;
-	if( req.meaured ) {
+	if( req.measured ) {
 		next();
 		return;
 	}
-	req.measued = true;
+	req.measured = true;
 	// for some edge cases, trying to access the ip/ips property
 	// throws an exception, this work-around appears to avoid the
 	// need to rely on try/catch
