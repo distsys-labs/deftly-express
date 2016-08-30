@@ -17,10 +17,14 @@ Defaults shown:
 }
 ```
 
-### Configuring Express
-The `configure` property takes a function that returns a promise. The argument passed to it will have an `express` property with a reference to the express app instance and a `request` property with a reference to the request instance used when forwarding requests. A `config` property will also be on the argument that has access to the `http` configuration block.
+### Configuring Express - `configure`
+The `configure` property takes a function that returns a promise. The argument passed to it will have the following properties:
+ * `express` - a reference to the express app instance
+ * `request` - a reference to the request instance used when forwarding requests
+ * `config` - the `http` configuration block specified
+ * `fount` - the fount instance in use by the service
 
-This function is called *before* the routes for the resources and actions get created. It allows you to have complete control over how express is configured and any additional middleware. This library does not include any middleware.
+This function is called *before* the routes for the resources and actions get created. It allows you to have complete control over how express is configured and any additional middleware. *This library does not include any middleware.*
 
 example
 ```js
@@ -32,7 +36,7 @@ function expressConfig( state ) {
 }
 ```
 
-### Final Configuration
+### Final Configuration - `postRouting`
 In some cases, there may be express configuration that needs to wait until after deftly-express has supplied the resource action's routes to express. This callback works exactly like the `configure` callback but is invoked after those routes have been supplied. 
 
 ## Routing

@@ -13,7 +13,8 @@ function initialize( state, deftly ) {
 	state.log = log;
 	var configuration = deftly.config.http || {};
 	Object.assign( state, {
-		config: configuration
+		config: configuration,
+		fount: deftly.fount
 	} );
 	
 	var configure = when();

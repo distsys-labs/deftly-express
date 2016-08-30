@@ -16,7 +16,9 @@ describe( "Deftly Service", function() {
 						res.set( "x-lol", "roflcoptor" );
 						next();
 					} );
-					return when();
+					// simply put here to demonstrate that the deftly fount
+					// instance is now available to the configure context
+					return state.fount( "resources" ).resolve( "testResource" );
 				}
 			}
 		} )
