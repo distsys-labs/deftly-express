@@ -5,35 +5,39 @@ var duplicateRgx = /[\/\\]{2}/g;
 var hostname = require( "os" ).hostname();
 
 function createContext( state, action, resource ) {
-	var url = getUrl( state, resource, action );
+	var urls = getUrls( state, resource, action );
 	var method = action.method ? action.method.toLowerCase() : "all";
-	state.express[ method ] ( 
-		url, 
-		setContext.bind( null, action, resource )
-	);
+	_.each( urls, function( url ) {
+		state.express[ method ] (
+			url, 
+			setContext.bind( null, action, resource )
+		);
+	} );
 }
 
 function createRoute( state, deftly, http, action, resource ) {
-	var url = getUrl( state, resource, action );
-	var method = action.method || "all";
-	state.log.debug( "route - %s %s -> %s:%s", 
-		method,
-		url,
-		resource.name,
-		action.name
-	);
-	state.express[ method.toLowerCase() ]( url, function( req, res ) {
-		var envelope = getEnvelope( action, resource, req );
-		deftly.handle( envelope )
-			.then( 
-				function( reply ) {
-					http.respond( req, res, reply );
-				},
-				function( error ) {
-					// only called if no error strategy was available
-					res.send( 500, "Server Error" );
-				}
-			);
+	var urls = getUrls( state, resource, action );
+	_.each( urls, function( url ) {
+		var method = action.method || "all";
+		state.log.debug( "route - %s %s -> %s:%s", 
+			method,
+			url,
+			resource.name,
+			action.name
+		);
+		state.express[ method.toLowerCase() ]( url, function( req, res ) {
+			var envelope = getEnvelope( action, resource, req );
+			deftly.handle( envelope )
+				.then( 
+					function( reply ) {
+						http.respond( req, res, reply );
+					},
+					function( error ) {
+						// only called if no error strategy was available
+						res.send( 500, "Server Error" );
+					}
+				);
+		} );
 	} );
 }
 
@@ -83,15 +87,23 @@ function getEnvelope( action, resource, req ) {
 	return env;
 }
 
-function getUrl( state, resource, action ) {
-	if( action.url && /^[\/]/.test( action.url ) ) {
-		return action.url.replace( duplicateRgx, "/" );
+function getUrls( state, resource, action ) {
+	if( !action.url || _.isString( action.url ) || _.isRegExp( action.url ) ) {
+		return [ getUrl( state, resource, action, action.url ) ];
+	} else {
+		return _.map( action.url, getUrl.bind( null, state, resource, action ) );
+	}
+}
+
+function getUrl( state, resource, action, actionUrl ) {
+	if( actionUrl && /^[\/]/.test( actionUrl ) ) {
+		return actionUrl.replace( duplicateRgx, "/" );
 	} 
 	var parts = [ 
 		state.config.urlPrefix || "",
 		state.config.apiPrefix || "",
 		resource.urlPrefix || resource.name,
-		action.url === undefined ? action.name : action.url
+		actionUrl === undefined ? action.name : actionUrl
 	];
 	return _.map( parts, prepSegment )
 		.join( "/" )

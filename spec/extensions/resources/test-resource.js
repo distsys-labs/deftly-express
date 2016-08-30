@@ -117,6 +117,24 @@ module.exports = function testResource() {
 						data: envelope.headers
 					}
 				}
+			},
+			versioned: {
+				method: "get",
+				url: [ "lol", "lulz" ],
+				handle: [
+					{
+						when: { route: "/test/lol" },
+						then: function( envelope ) {
+							return { data: ":D" };
+						}
+					},
+					{
+						when: { route: "/test/lulz" },
+						then: function( envelope ) {
+							return { data: ":F" };
+						}
+					}
+				]
 			}
 		}
 	};

@@ -159,6 +159,44 @@ describe( "Deftly Service", function() {
 		} );
 	} );
 
+	describe( "when hitting URL with multiple routes - first route", function() {
+		var body, status;
+		before( function( done ) {
+			request.get( 
+				"http://localhost:8800/test/lol", 
+				{}, 
+				function( err, resp, respBody ) {
+					body = respBody;
+					status = resp.statusCode;
+					done();
+				} );
+		} );
+
+		it( "should get handler mapped to first route", function() {
+			status.should.equal( 200 );
+			body.should.eql( ":D" );
+		} );
+	} );
+
+	describe( "when hitting URL with multiple routes - second route", function() {
+		var body, status;
+		before( function( done ) {
+			request.get( 
+				"http://localhost:8800/test/lulz", 
+				{}, 
+				function( err, resp, respBody ) {
+					body = respBody;
+					status = resp.statusCode;
+					done();
+				} );
+		} );
+
+		it( "should get handler mapped to second route", function() {
+			status.should.equal( 200 );
+			body.should.eql( ":F" );
+		} );
+	} );
+
 	describe( "when calling a forwarded action", function() {
 		var body, status;
 		before( function( done ) {
