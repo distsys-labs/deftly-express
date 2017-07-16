@@ -1,18 +1,21 @@
 ## deftly-express
-A minimal HTTP transport based on express. 
+A minimal HTTP transport based on express.
+
+[![Build Status][travis-image]][travis-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
 
 ## Configuration
-The configuration block should show up in the service's configuration block under the `http` property. 
+The configuration block should show up in the service's configuration block under the `http` property.
 
 Defaults shown:
 ```js
 {
 	http: {
 		port: 8800,
-		apiPrefix: "/api", // prefixes all API calls
-		urlPrefix: "", // prefixes all URLs
+		apiPrefix: '/api', // prefixes all API calls
+		urlPrefix: ', // prefixes all URLs
 		configure: undefined, // a callback to configure express
-		postRouting: undefined // a callback to perform any final express configuration 
+		postRouting: undefined // a callback to perform any final express configuration
 	}
 }
 ```
@@ -29,15 +32,15 @@ This function is called *before* the routes for the resources and actions get cr
 example
 ```js
 // simple example showing adding cookie parser middleware
-function expressConfig( state ) {
-	var app = state.express;
-	app.use( "/", require( "cookie-parser" )() );
-	return when(); // if the function is asynchronous, it must return a promise
+function expressConfig (state) {
+	const app = state.express
+	app.use('/', require('cookie-parser')())
+	return Promise.resolve() // if the function is asynchronous, it must return a promise
 }
 ```
 
 ### Final Configuration - `postRouting`
-In some cases, there may be express configuration that needs to wait until after deftly-express has supplied the resource action's routes to express. This callback works exactly like the `configure` callback but is invoked after those routes have been supplied. 
+In some cases, there may be express configuration that needs to wait until after deftly-express has supplied the resource action's routes to express. This callback works exactly like the `configure` callback but is invoked after those routes have been supplied.
 
 ## Routing
 This module builds routes using a number of configuration values as well as properties on the resource and action.
@@ -50,8 +53,8 @@ URLs can be specified in one of two ways; with an explicit URL or a relative one
 
 Relative URLs are comprised of a number of possible values in the following order:
 
- * http.urlPrefix - config property, defaults to ""
- * http.apiPrefix - config property, defaults to "/api"
+ * http.urlPrefix - config property, defaults to '
+ * http.apiPrefix - config property, defaults to '/api'
  * resource.urlPrefix - resource property, defaults to the resource's name
  * action.url - action property, defaults to action's name
 
@@ -88,7 +91,7 @@ Relative URLs are comprised of a number of possible values in the following orde
 		[status]: 302, // use to set a status other than 302
 		url: // the URL to redirect to
 	},
-	view: "viewName"
+	view: 'viewName'
 }
 ```
 
@@ -113,7 +116,7 @@ The cookies hash uses key value pairs where each value is a hash with a `value` 
 ```
 
 ### file
-There are several ways to return a file as the response. 
+There are several ways to return a file as the response.
 
 #### with path to a file
 If providing a path to the file, the `stream` property is not used and the `name` and `type` are optional as they can often be determined from the file itself.
@@ -129,3 +132,8 @@ Very simply way to respond with a redirect. The status defaults to a 302 if one 
 
 ### stream
 A simpler version of the file response but will simply send a stream back. The `type` cannot be inferred and so `octet-stream` is the only default value that will ever be supplied if one is not specified.
+
+[travis-url]: https://travis-ci.org/deftly/node-deftly
+[travis-image]: https://travis-ci.org/deftly/node-deftly.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/deftly/node-deftly?branch=master
+[coveralls-image]: https://coveralls.io/repos/github/deftly/node-deftly/badge.svg?branch=master
