@@ -76,10 +76,10 @@ function getEnvelope (action, resource, req) {
     .forEach(source => {
       Object.keys(source).forEach(key => {
         var val = source[ key ]
-        if (!_.has(env.data, key)) {
+        if (!has(env.data, key)) {
           env.data[ key ] = val
         }
-        if (!_.has(env.params, key)) {
+        if (!has(env.params, key)) {
           env.params[ key ] = val
         }
       })
@@ -108,6 +108,10 @@ function getUrl (state, resource, action, actionUrl) {
   return parts.map(prepSegment)
     .join('/')
     .replace(duplicateRgx, '/')
+}
+
+function has (obj, key) {
+  return obj && obj[key] !== undefined
 }
 
 function prepSegment (segment) {
