@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/deftly/deftly-express/compare/v1.1.1...v1.1.2) (2017-10-23)
+
+
+### Bug Fixes
+
+* add request to envelope ([bd4ec5e](https://github.com/deftly/deftly-express/commit/bd4ec5e))
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/deftly/deftly-express/compare/v1.1.0...v1.1.1) (2017-07-16)
 
