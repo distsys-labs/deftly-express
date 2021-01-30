@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.4](https://github.com/deftly/deftly-express/compare/v1.1.3...v1.1.4) (2021-01-30)
+
+
+### Bug Fixes
+
+* provide proper use of axios in place of request ([57472c6](https://github.com/deftly/deftly-express/commit/57472c6a0be70d035ddd9a4a4e57bf3f01d4fed7))
+
 ### [1.1.3](https://github.com/deftly/deftly-express/compare/v1.1.2...v1.1.3) (2021-01-30)
 
 
