@@ -1,5 +1,5 @@
-var fs = require('fs')
-var path = require('path')
+const fs = require('fs')
+const path = require('path')
 
 module.exports = function testResource () {
   return {
@@ -25,8 +25,8 @@ module.exports = function testResource () {
       fileStream: {
         method: 'get',
         handle: function (envelope, next) {
-          var filePath = path.resolve('./spec/public', 'test.html')
-          var stream = fs.createReadStream(filePath)
+          const filePath = path.resolve('./spec/public', 'test.html')
+          const stream = fs.createReadStream(filePath)
           return {
             file: {
               stream: stream,
@@ -120,7 +120,7 @@ module.exports = function testResource () {
       },
       versioned: {
         method: 'get',
-        url: [ 'lol', 'lulz' ],
+        url: ['lol', 'lulz'],
         handle: [
           {
             when: { route: '/test/lol' },
@@ -141,7 +141,7 @@ module.exports = function testResource () {
 }
 
 function throwCustom (error, message) {
-  var E = function (message) {
+  const E = function (message) {
     this.name = error + 'Error'
     this.message = message || error
     this.stack = (new Error()).stack

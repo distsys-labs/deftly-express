@@ -1,7 +1,7 @@
 const express = require('express')
-const request = require('request')
+const axios = require('axios')
 const http = require('http')
-var log
+let log
 
 function initialize (state, deftly) {
   log = deftly.log.get('http')
@@ -48,7 +48,7 @@ module.exports = function expressTransport () {
   const app = express()
   const state = {
     express: app,
-    request: request,
+    axios: axios,
     http: http.createServer(app)
   }
   state.router = require('./router')(state)

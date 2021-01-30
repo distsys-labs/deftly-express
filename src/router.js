@@ -8,7 +8,7 @@ function createContext (state, action, resource) {
   const urls = getUrls(state, resource, action)
   const method = action.method ? action.method.toLowerCase() : 'all'
   _.each(urls, url => {
-    state.express[ method ](
+    state.express[method](
       url,
       setContext.bind(null, action, resource)
     )
@@ -25,7 +25,7 @@ function createRoute (state, deftly, http, action, resource) {
       resource.name,
       action.name
     )
-    state.express[ method.toLowerCase() ](url, (req, res) => {
+    state.express[method.toLowerCase()](url, (req, res) => {
       const envelope = getEnvelope(action, resource, req)
       deftly.handle(envelope)
         .then(
@@ -42,7 +42,7 @@ function createRoute (state, deftly, http, action, resource) {
 }
 
 function createRoutes (state, deftly) {
-  var http = httpFn(state)
+  const http = httpFn(state)
   deftly.forEachAction(createContext.bind(null, state))
   state.express.use(telemetry.bind(null, state, deftly))
   deftly.forEachAction(createRoute.bind(null, state, deftly, http))
@@ -73,15 +73,15 @@ function getEnvelope (action, resource, req) {
     }
   };
 
-  [ req.params, req.query ]
+  [req.params, req.query]
     .forEach(source => {
       Object.keys(source).forEach(key => {
-        var val = source[ key ]
+        const val = source[key]
         if (!has(env.data, key)) {
-          env.data[ key ] = val
+          env.data[key] = val
         }
         if (!has(env.params, key)) {
-          env.params[ key ] = val
+          env.params[key] = val
         }
       })
     })
@@ -90,7 +90,7 @@ function getEnvelope (action, resource, req) {
 
 function getUrls (state, resource, action) {
   if (!action.url || _.isString(action.url) || (action.url && action.url.test)) {
-    return [ getUrl(state, resource, action, action.url) ]
+    return [getUrl(state, resource, action, action.url)]
   } else {
     return _.map(action.url, getUrl.bind(null, state, resource, action))
   }
@@ -120,12 +120,12 @@ function prepSegment (segment) {
 }
 
 function setContext (action, resource, req, res, next) {
-  req.metricKey = [ resource.name, action.name, 'http' ]
+  req.metricKey = [resource.name, action.name, 'http']
   next()
 }
 
 function telemetry (state, deftly, req, res, next) {
-  var ip
+  let ip
   if (req.measured) {
     next()
     return
@@ -135,12 +135,12 @@ function telemetry (state, deftly, req, res, next) {
   // throws an exception, this work-around appears to avoid the
   // need to rely on try/catch
   if (req.app) {
-    ip = req.ips.length ? req.ips[ 0 ] : req.ip
+    ip = req.ips.length ? req.ips[0] : req.ip
   } else {
-    ip = req.headers[ 'X-Forwarded-For' ] || req.socket.remoteAddress
+    ip = req.headers['X-Forwarded-For'] || req.socket.remoteAddress
   }
   res.setMaxListeners(0)
-  const metricKey = req.metricKey || [ req.url.replace(/[/]/g, '-') ]
+  const metricKey = req.metricKey || [req.url.replace(/[/]/g, '-')]
   const timer = deftly.metrics.timer(metricKey.concat('duration'))
   const requests = deftly.metrics.meter(metricKey.concat('requests'), 'count')
   const ingress = deftly.metrics.meter(metricKey.concat('ingress'), 'bytes')
@@ -152,7 +152,7 @@ function telemetry (state, deftly, req, res, next) {
     const user = _.isObject(req.user) ? (req.user.name || req.user.username || req.user.id) : 'anonymous'
     const read = req.socket.bytesRead - startingRead
     const readKB = read / 1024
-    const code = res.statusCode
+    const code = res.status
     const message = res.statusMessage || ''
     const sent = req.socket.bytesWritten - startingSent
     const sentKB = sent ? sent / 1024 : 0
