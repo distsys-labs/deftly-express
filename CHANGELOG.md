@@ -1,6 +1,13 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.1.3](https://github.com/deftly/deftly-express/compare/v1.1.2...v1.1.3) (2021-01-30)
+
+
+### Bug Fixes
+
+* patch dependencies to reduce audit flags ([1b85ac8](https://github.com/deftly/deftly-express/commit/1b85ac82620f3f7861da85e5ca22b1882c88295c))
 
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/deftly/deftly-express/compare/v1.1.1...v1.1.2) (2017-10-23)
