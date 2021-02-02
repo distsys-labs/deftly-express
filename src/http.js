@@ -130,10 +130,19 @@ function sendStream (res, reply) {
   const code = reply.status || reply.status || 200
   const headers = reply.headers || {}
   reply.headers = headers
+  headers['Transfer-Encoding'] = 'chunked'
   headers['Content-Type'] = reply.content || reply.type || 'application/octet-stream'
   res.status(code)
   setMeta(res, reply)
-  reply.stream.pipe(res)
+  reply
+    .stream
+    .on('error', console.error)
+    .on('data', x => {
+      res.write(x)
+    })
+    .on('end', x => {
+      res.end()
+    })
 }
 
 function setMeta (res, reply) {

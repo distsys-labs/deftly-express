@@ -77,10 +77,7 @@ Relative URLs are comprised of a number of possible values in the following orde
 		[inline]: false, // when true, no user dialog will appear
 		[stream]: ,// a stream to pipe to the response
 	},
-	stream: { // used when sending back a stream
-		[type]: , // content-type, defaults to octet-stream
-		stream:
-	},
+	stream: ,// used when sending back a stream
 	forward: { // only used if forwarding the request
 		url: , // the url to forward to
 		[method]: , // if unspecified, copies the method of the original request
