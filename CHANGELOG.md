@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.5](https://github.com/deftly/deftly-express/compare/v1.1.4...v1.1.5) (2021-02-02)
+
+
+### Bug Fixes
+
+* corect streaming implementation to work with duplexed streams ([1c00551](https://github.com/deftly/deftly-express/commit/1c00551bddc3e7bf63323a1a882f26878c1b310f))
+
 ### [1.1.4](https://github.com/deftly/deftly-express/compare/v1.1.3...v1.1.4) (2021-01-30)
 
 
