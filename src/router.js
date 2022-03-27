@@ -26,7 +26,7 @@ function createRoute (state, deftly, http, action, resource) {
       action.name
     )
     state.express[method.toLowerCase()](url, (req, res) => {
-      const envelope = getEnvelope(action, resource, req)
+      const envelope = getEnvelope(action, resource, req, res)
       deftly.handle(envelope)
         .then(
           reply => {
@@ -48,7 +48,7 @@ function createRoutes (state, deftly) {
   deftly.forEachAction(createRoute.bind(null, state, deftly, http))
 }
 
-function getEnvelope (action, resource, req) {
+function getEnvelope (action, resource, req, res) {
   // again oversimplified, but it'll do
   const env = {
     transport: 'http',
@@ -63,6 +63,7 @@ function getEnvelope (action, resource, req) {
     user: req.user,
     cookies: req.cookies,
     request: req,
+    response: res,
     signout: () => {
       if (req.logout) {
         req.logout()
